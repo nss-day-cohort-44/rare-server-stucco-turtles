@@ -13,6 +13,7 @@ CREATE TABLE "Users" (
     "created_on" date,
     "active" bit,
     "account_type_id" INTEGER,
+    "password" varchar,
     FOREIGN KEY(`account_type_id`) REFERENCES `AccountTypes`(`id`)
 );
 CREATE TABLE "DemotionQueue" (
