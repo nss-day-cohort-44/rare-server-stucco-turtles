@@ -10,6 +10,12 @@ DROP TABLE IF EXISTS `DemotionQueue`;
 DROP TABLE IF EXISTS `Users`;
 DROP TABLE IF EXISTS `AccountTypes`;
 
+DELETE from Users;
+
+
+
+
+
 
 CREATE TABLE "AccountTypes" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,

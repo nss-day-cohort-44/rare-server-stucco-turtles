@@ -29,12 +29,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             except ValueError:
                 pass
 
-            return (resource, id)
-
-
-
-
-
+        return (resource, id)
 
 # Here's a class function
     def _set_headers(self, status):
@@ -50,6 +45,23 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
         self.send_header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept')
         self.end_headers()
+
+    def do_GET(self):
+        self._set_headers(200)
+
+        response = {}
+
+        # Parse URL and store entire tuple in variable
+        parsed = self.parse_url(self.path)
+
+        #
+        if len(parsed) == 2:
+            (resource, id) = parsed
+
+        elif len(parsed) == 3:
+            (resource, key, value) = parsed
+
+        self.wfile.write(f"{response}".encode())
 
 
 
@@ -74,74 +86,7 @@ class HandleRequests(BaseHTTPRequestHandler):
     def do_DELETE(self):
         # Set a 204 response code
         self._set_headers(204)
-
-        # Parse the URL
-        (resource, id) = self.parse_url(self.path)
-        
         self.wfile.write("".encode())
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def main():
     host = ''
