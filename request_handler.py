@@ -2,28 +2,30 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from users.request import create_user
 
+from posts import create_post
+
+
 class HandleRequests(BaseHTTPRequestHandler):
 
     def parse_url(self, path):
         path_params = path.split("/")
         resource = path_params[1]
 
-
         if "?" in resource:
 
-            param = resource.split("?")[1]    
-            resource = resource.split("?")[0]  
-            pair = param.split("=")   
-            key = pair[0]  
-            value = pair[1]  
+            param = resource.split("?")[1]
+            resource = resource.split("?")[0]
+            pair = param.split("=")
+            key = pair[0]
+            value = pair[1]
 
-            return ( resource, key, value )
+            return (resource, key, value)
 
         else:
             id = None
 
             try:
-                id = int(path_params[2]) 
+                id = int(path_params[2])
             except IndexError:
                 pass
             except ValueError:
@@ -42,8 +44,10 @@ class HandleRequests(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
-        self.send_header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept')
+        self.send_header('Access-Control-Allow-Methods',
+                         'GET, POST, PUT, DELETE')
+        self.send_header('Access-Control-Allow-Headers',
+                         'X-Requested-With, Content-Type, Accept')
         self.end_headers()
 
     def do_GET(self):
@@ -63,7 +67,24 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         self.wfile.write(f"{response}".encode())
 
+    def do_PUT(self):
+        content_len = int(self.headers.get('content-length', 0))
+        post_body = self.rfile.read(content_len)
+        post_body = json.loads(post_body)
 
+    # Parse the URL
+        (resource, id) = self.parse_url(self.path)
+
+        success = False
+
+    # rest of the elif's
+
+        if success:
+            self._set_headers(204)
+        else:
+            self._set_headers(404)
+
+        self.wfile.write("".encode())
 
     def do_POST(self):
         self._set_headers(201)
@@ -78,20 +99,23 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "register":
             new_entry = create_user(post_body)
-        
-    
-        
+
+        elif resource == "posts":
+            new_entry = create_post(post_body)
+
         self.wfile.write(f"{new_entry}".encode())
-    
+
     def do_DELETE(self):
         # Set a 204 response code
         self._set_headers(204)
         self.wfile.write("".encode())
 
+
 def main():
     host = ''
     port = 8088
     HTTPServer((host, port), HandleRequests).serve_forever()
+
 
 if __name__ == "__main__":
     main()
