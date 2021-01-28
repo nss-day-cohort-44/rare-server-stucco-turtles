@@ -1,3 +1,22 @@
+DROP TABLE IF EXISTS `Categories`;
+DROP TABLE IF EXISTS `Tags`;
+DROP TABLE IF EXISTS `Reactions`;
+DROP TABLE IF EXISTS `PostReactions`;
+DROP TABLE IF EXISTS `Posts`;
+DROP TABLE IF EXISTS `PostTags`;
+DROP TABLE IF EXISTS `Comments`;
+DROP TABLE IF EXISTS `Subscriptions`;
+DROP TABLE IF EXISTS `DemotionQueue`;
+DROP TABLE IF EXISTS `Users`;
+DROP TABLE IF EXISTS `AccountTypes`;
+
+DELETE from Users;
+
+
+
+
+
+
 CREATE TABLE "AccountTypes" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "label" varchar
