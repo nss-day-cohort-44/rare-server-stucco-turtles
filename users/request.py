@@ -23,3 +23,4 @@ def create_user(new_user):
         new_user['valid'] = "valid"
 
     return json.dumps(new_user)
+

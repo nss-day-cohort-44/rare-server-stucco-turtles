@@ -82,6 +82,11 @@ class HandleRequests(BaseHTTPRequestHandler):
     
         
         self.wfile.write(f"{new_entry}".encode())
+    
+    def do_DELETE(self):
+        # Set a 204 response code
+        self._set_headers(204)
+        self.wfile.write("".encode())
 
 def main():
     host = ''
