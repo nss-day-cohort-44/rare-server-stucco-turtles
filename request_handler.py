@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from users.request import create_user
+from posts import get_all_posts
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -59,6 +60,12 @@ class HandleRequests(BaseHTTPRequestHandler):
         #
         if len(parsed) == 2:
             (resource, id) = parsed
+
+            if resource == "posts":
+                if id is not None:
+                    response = f"{get_single_post(id)}"
+                else:
+                    response = f"{get_all_posts()}"
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
