@@ -22,3 +22,4 @@ def create_user(new_user):
         new_user['id'] = id
 
     return json.dumps(new_user)
+

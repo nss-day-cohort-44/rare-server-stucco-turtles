@@ -70,7 +70,15 @@ class HandleRequests(BaseHTTPRequestHandler):
     
         
         self.wfile.write(f"{new_entry}".encode())
+    
+    def do_DELETE(self):
+        # Set a 204 response code
+        self._set_headers(204)
 
+        # Parse the URL
+        (resource, id) = self.parse_url(self.path)
+        
+        self.wfile.write("".encode())
 
 
 
