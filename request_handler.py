@@ -3,6 +3,8 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from users.request import create_user, get_all_users, get_single_user, logged_user
 
+from posts import create_post
+
 
 class HandleRequests(BaseHTTPRequestHandler):
 
@@ -117,6 +119,9 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_entry = logged_user(post_body)
         if resource == "categories":
             new_entry = create_new_category(post_body)
+
+        elif resource == "posts":
+            new_entry = create_post(post_body)
 
         self.wfile.write(f"{new_entry}".encode())
 
