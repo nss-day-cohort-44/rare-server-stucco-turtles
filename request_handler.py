@@ -1,7 +1,8 @@
+from users.request import create_user, get_all_users, get_single_user, logged_user
+from posts import get_all_posts, get_single_post, delete_post
+from users.request import create_user
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from users.request import create_user
-from posts import get_all_posts, get_single_post, delete_post
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -66,11 +67,16 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_single_post(id)}"
                 else:
                     response = f"{get_all_posts()}"
+            if resource == "users":
+                if id is not None:
+                    response = f"{get_single_user(id)}"
+                else:
+                    response = f"{get_all_users()}"
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
 
-        self.wfile.write(f"{response}".encode())
+        self.wfile.write(response.encode())
 
     def do_PUT(self):
         content_len = int(self.headers.get('content-length', 0))
@@ -104,6 +110,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "register":
             new_entry = create_user(post_body)
+        if resource == "login":
+            new_entry = logged_user(post_body)
 
         self.wfile.write(f"{new_entry}".encode())
 
