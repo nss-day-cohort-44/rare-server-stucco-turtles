@@ -34,3 +34,41 @@ def get_all_posts():
             posts.append(post.__dict__)
 
     return json.dumps(posts)
+
+
+def get_single_post(id):
+
+    with sqlite3.connect("./rare.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        SELECT
+            p.id,
+            p.user_id,
+            p.category_id,
+            p.title,
+            p.publication_date,
+            p.image_url,
+            p.content,
+            p.approved
+        FROM posts p
+        WHERE p.id = ?
+        """, (id, ))
+
+        data = db_cursor.fetchone()
+
+        post = Post(data['id'], data['user_id'], data['category_id'], data['title'],
+                    data['publication_id'], data['image_url'], data['content'], data['approved'])
+
+    return json.dumps(post.__dict__)
+
+
+def delete_post(id):
+    with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM posts
+        WHERE id = ?
+        """, (id, ))

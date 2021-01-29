@@ -1,7 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from users.request import create_user
-from posts import get_all_posts
+from posts import get_all_posts, get_single_post, delete_post
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -110,6 +110,14 @@ class HandleRequests(BaseHTTPRequestHandler):
     def do_DELETE(self):
         # Set a 204 response code
         self._set_headers(204)
+
+        # parsing the URL
+        (resourse, id) = self.parse.url(self.path)
+
+        if resourse == "posts":
+            delete_post(id)
+
+        # Encode the new animal and send in response
         self.wfile.write("".encode())
 
 
