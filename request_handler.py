@@ -1,3 +1,4 @@
+from comments.request import create_comment
 from categories.request import create_new_category, get_all_categories
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
@@ -122,6 +123,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         elif resource == "posts":
             new_entry = create_post(post_body)
+        elif resource == "comments":
+            new_entry = create_comment(post_body)
 
         self.wfile.write(f"{new_entry}".encode())
 
