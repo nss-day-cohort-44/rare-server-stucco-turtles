@@ -1,4 +1,4 @@
-from categories.request import get_all_categories
+from categories.request import create_new_category, get_all_categories
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from users.request import create_user, get_all_users, get_single_user, logged_user
@@ -115,6 +115,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_entry = create_user(post_body)
         if resource == "login":
             new_entry = logged_user(post_body)
+        if resource == "categories":
+            new_entry = create_new_category(post_body)
 
         self.wfile.write(f"{new_entry}".encode())
 
