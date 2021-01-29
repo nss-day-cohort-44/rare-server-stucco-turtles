@@ -9,14 +9,6 @@ DROP TABLE IF EXISTS `Subscriptions`;
 DROP TABLE IF EXISTS `DemotionQueue`;
 DROP TABLE IF EXISTS `Users`;
 DROP TABLE IF EXISTS `AccountTypes`;
-
-DELETE from Users;
-
-
-
-
-
-
 CREATE TABLE "AccountTypes" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "label" varchar
@@ -98,9 +90,13 @@ CREATE TABLE "Categories" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "label" varchar
 );
-
-INSERT INTO Categories ('label') VALUES ('News');
-INSERT INTO Tags ('label') VALUES ('JavaScript');
-INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
-INSERT INTO AccountTypes ('label') VALUES ('Admin');
-INSERT INTO AccountTypes ('label') VALUES ('Author');
+INSERT INTO Categories ('label')
+VALUES ('News');
+INSERT INTO Tags ('label')
+VALUES ('JavaScript');
+INSERT INTO Reactions ('label', 'image_url')
+VALUES ('happy', 'https://pngtree.com/so/happy');
+INSERT INTO AccountTypes ('label')
+VALUES ('Admin');
+INSERT INTO AccountTypes ('label')
+VALUES ('Author');
