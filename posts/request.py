@@ -8,13 +8,13 @@ def create_post(new_post):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        INSERT INTO Post
-            ( title, publication_date, image_url, content, approved, user_id, category_id )
+        INSERT INTO Posts
+            ( user_id, category_id, title, publication_date, image_url, content, approved )
         VALUES
             ( ?, ?, ?, ?, ?, ?, ?);
-        """, (new_post['title'], new_post['publication_date'],
+        """, (new_post['user_id'], new_post['category_id'], new_post['title'], new_post['publication_date'],
               new_post['image_url'], new_post['content'],
-              new_post['approved'], new_post['user_id'], new_post['category_id'], ))
+              new_post['approved'], ))
 
         id = db_cursor.lastrowid
 
