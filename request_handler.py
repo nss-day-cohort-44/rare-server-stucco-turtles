@@ -1,5 +1,5 @@
 from users.request import create_user, get_all_users, get_single_user, logged_user
-from posts import get_all_posts, get_single_post, delete_post
+from posts import get_all_posts, get_single_post, delete_post, get_users_post
 from users.request import create_user
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
@@ -75,6 +75,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
+
+            if key == "user_id" and resource == "posts":
+                response = get_users_post(value)
 
         self.wfile.write(response.encode())
 
