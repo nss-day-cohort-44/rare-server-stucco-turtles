@@ -104,3 +104,8 @@ INSERT INTO Tags ('label') VALUES ('JavaScript');
 INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
 INSERT INTO AccountTypes ('label') VALUES ('Admin');
 INSERT INTO AccountTypes ('label') VALUES ('Author');
+INSERT INTO `Posts`
+VALUES (null, null, null, "TITLE", 12/12/12, null, "CONTENT", null)
+
+
+
