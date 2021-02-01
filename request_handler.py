@@ -1,10 +1,8 @@
-from comments.request import create_comment
-from categories.request import create_new_category, get_all_categories
+from users.request import create_user, get_all_users, get_single_user, logged_user
+from posts import get_all_posts, get_single_post, delete_post, get_users_post
+from users.request import create_user
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
-from users.request import create_user, get_all_users, get_single_user, logged_user
-
-from posts import create_post
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -54,7 +52,7 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_headers(200)
-        
+
         response = {}
 
         # Parse URL and store entire tuple in variable
@@ -64,23 +62,22 @@ class HandleRequests(BaseHTTPRequestHandler):
         if len(parsed) == 2:
             (resource, id) = parsed
 
-            if resource == "users" or resource == "profile":
+            if resource == "posts":
+                if id is not None:
+                    response = f"{get_single_post(id)}"
+                else:
+                    response = f"{get_all_posts()}"
+            if resource == "users":
                 if id is not None:
                     response = f"{get_single_user(id)}"
                 else:
                     response = f"{get_all_users()}"
 
-            if resource == "categories":
-                if id is not None:
-                    response = f"{get_single_category()}"
-                else:
-                    response = f"{get_all_categories()}"
-
-            
-
-
         elif len(parsed) == 3:
             (resource, key, value) = parsed
+
+            if key == "user_id" and resource == "posts":
+                response = get_users_post(value)
 
         self.wfile.write(response.encode())
 
@@ -118,19 +115,20 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_entry = create_user(post_body)
         if resource == "login":
             new_entry = logged_user(post_body)
-        if resource == "categories":
-            new_entry = create_new_category(post_body)
-
-        elif resource == "posts":
-            new_entry = create_post(post_body)
-        elif resource == "comments":
-            new_entry = create_comment(post_body)
 
         self.wfile.write(f"{new_entry}".encode())
 
     def do_DELETE(self):
         # Set a 204 response code
         self._set_headers(204)
+
+        # parsing the URL
+        (resourse, id) = self.parse_url(self.path)
+
+        if resourse == "posts":
+            delete_post(id)
+
+        # Encode the new animal and send in response
         self.wfile.write("".encode())
 
 

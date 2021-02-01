@@ -1,6 +1,7 @@
 import sqlite3
-import json
 from models import Category
+import json
+
 
 def get_all_categories():
 

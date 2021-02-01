@@ -1,4 +1,4 @@
-class Post:
+class Post():
 
     def __init__(self, id, user_id, category_id, title, publication_date, image_url, content, approved=True):
         self.id = id
