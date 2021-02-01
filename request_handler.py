@@ -1,5 +1,6 @@
 from users.request import create_user, get_all_users, get_single_user, logged_user
 from posts import get_all_posts, get_single_post, delete_post, get_users_post
+from categories import get_all_categories, create_new_category
 from users.request import create_user
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
@@ -72,6 +73,11 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_single_user(id)}"
                 else:
                     response = f"{get_all_users()}"
+            elif resource == "categories":
+                if id is not None:
+                    response = {"Get category by id needed"}
+                else:
+                    response = f"{get_all_categories()}"
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
