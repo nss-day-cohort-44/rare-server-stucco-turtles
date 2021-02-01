@@ -1,5 +1,5 @@
 from users.request import create_user, get_all_users, get_single_user, logged_user
-from posts import get_all_posts, get_single_post, delete_post, get_users_post
+from posts import get_all_posts, get_single_post, delete_post, get_users_post, create_post
 from categories import get_all_categories, create_new_category
 from users.request import create_user
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -119,8 +119,10 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "register":
             new_entry = create_user(post_body)
-        if resource == "login":
+        elif resource == "login":
             new_entry = logged_user(post_body)
+        elif resource == "posts":
+            new_entry = create_post(post_body)
 
         self.wfile.write(f"{new_entry}".encode())
 
