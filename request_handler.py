@@ -3,6 +3,7 @@ from posts import get_all_posts, get_single_post, delete_post, get_users_post, c
 from categories import get_all_categories, create_new_category
 from users.request import create_user
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from comments import get_comments, create_comment
 import json
 
 
@@ -78,6 +79,13 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = {"Get category by id needed"}
                 else:
                     response = f"{get_all_categories()}"
+            elif resource == "comments":
+                if id is not None:
+                    response = {"Get comment by id needed"}
+                else:
+                    response = f"{get_comments}"
+
+
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
@@ -123,6 +131,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_entry = logged_user(post_body)
         elif resource == "posts":
             new_entry = create_post(post_body)
+        elif resource == "comments":
+            new_entry = create_comment(post_body)
 
         self.wfile.write(f"{new_entry}".encode())
 

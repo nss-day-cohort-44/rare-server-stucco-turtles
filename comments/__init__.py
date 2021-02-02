@@ -1,1 +1,1 @@
-from .request import create_comment
+from .request import create_comment, get_comments
