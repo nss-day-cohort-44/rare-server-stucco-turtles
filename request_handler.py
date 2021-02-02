@@ -129,6 +129,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             new_entry = logged_user(post_body)
         if resource == "tags":
             new_entry = create_tag(post_body)
+        if resource == "categories":
+            new_entry = create_new_category(post_body)
 
         self.wfile.write(f"{new_entry}".encode())
 
