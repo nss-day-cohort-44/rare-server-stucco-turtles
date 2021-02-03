@@ -91,6 +91,17 @@ CREATE TABLE "Categories" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "label" varchar
 );
+
+INSERT INTO Categories ('label') VALUES ('News');
+INSERT INTO Tags ('label') VALUES ('JavaScript');
+INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.com/so/happy');
+INSERT INTO AccountTypes ('label') VALUES ('Admin');
+INSERT INTO AccountTypes ('label') VALUES ('Author');
+INSERT INTO `Posts`
+VALUES (null, null, null, "BOOM", 12/12/12, null, "CONTENT", null);
+
+
+
 INSERT INTO Categories ('label')
 VALUES ('News');
 INSERT INTO Tags ('label')

@@ -1,10 +1,13 @@
 from users.request import create_user, get_all_users, get_single_user, logged_user
-from posts import get_all_posts, get_single_post, delete_post, get_users_post, create_post
+from posts import get_all_posts, get_single_post, delete_post, get_users_post, create_post, update_post
 from categories import get_all_categories, create_new_category
 from tags import get_all_tags, create_tag
 from users.request import create_user
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+# from users.request import create_user
+# from posts import get_all_posts, get_single_post, delete_post
+from users.request import create_user, get_all_users, get_single_user, logged_user
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -68,7 +71,9 @@ class HandleRequests(BaseHTTPRequestHandler):
                 if id is not None:
                     response = f"{get_single_post(id)}"
                 else:
-                    response = f"{get_all_posts()}"
+                    response = f"{get_all_posts()}"    
+
+                    
             if resource == "users":
                 if id is not None:
                     response = f"{get_single_user(id)}"
@@ -104,6 +109,8 @@ class HandleRequests(BaseHTTPRequestHandler):
         success = False
 
     # rest of the elif's
+        if resource == "posts":
+            success = update_post(id, post_body)
 
         if success:
             self._set_headers(204)
@@ -141,9 +148,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         self._set_headers(204)
 
         # parsing the URL
-        (resourse, id) = self.parse_url(self.path)
+        (resource, id) = self.parse_url(self.path)
 
-        if resourse == "posts":
+        if resource == "posts":
             delete_post(id)
 
         # Encode the new animal and send in response
