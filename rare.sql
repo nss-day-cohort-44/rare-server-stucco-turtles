@@ -9,14 +9,6 @@ DROP TABLE IF EXISTS `Subscriptions`;
 DROP TABLE IF EXISTS `DemotionQueue`;
 DROP TABLE IF EXISTS `Users`;
 DROP TABLE IF EXISTS `AccountTypes`;
-
-DELETE from Users;
-
-
-
-
-
-
 CREATE TABLE "AccountTypes" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "label" varchar
@@ -66,6 +58,7 @@ CREATE TABLE "Comments" (
     "post_id" INTEGER,
     "author_id" INTEGER,
     "content" varchar,
+    "subject" varchar,
     FOREIGN KEY(`post_id`) REFERENCES `Posts`(`id`),
     FOREIGN KEY(`author_id`) REFERENCES `Users`(`id`)
 );
@@ -105,7 +98,17 @@ INSERT INTO Reactions ('label', 'image_url') VALUES ('happy', 'https://pngtree.c
 INSERT INTO AccountTypes ('label') VALUES ('Admin');
 INSERT INTO AccountTypes ('label') VALUES ('Author');
 INSERT INTO `Posts`
-VALUES (null, null, null, "TITLE", 12/12/12, null, "CONTENT", null)
+VALUES (null, null, null, "BOOM", 12/12/12, null, "CONTENT", null);
 
 
 
+INSERT INTO Categories ('label')
+VALUES ('News');
+INSERT INTO Tags ('label')
+VALUES ('JavaScript');
+INSERT INTO Reactions ('label', 'image_url')
+VALUES ('happy', 'https://pngtree.com/so/happy');
+INSERT INTO AccountTypes ('label')
+VALUES ('Admin');
+INSERT INTO AccountTypes ('label')
+VALUES ('Author');
