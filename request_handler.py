@@ -1,6 +1,8 @@
 from users.request import create_user, get_all_users, get_single_user, logged_user
-from posts import get_all_posts, get_single_post, delete_post, get_users_post, update_post
-# from users.request import create_user
+from posts import get_all_posts, get_single_post, delete_post, get_users_post, create_post, update_post
+from categories import get_all_categories, create_new_category
+from tags import get_all_tags, create_tag
+from users.request import create_user
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 # from users.request import create_user
@@ -77,6 +79,16 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = f"{get_single_user(id)}"
                 else:
                     response = f"{get_all_users()}"
+            elif resource == "categories":
+                if id is not None:
+                    response = {"Get category by id needed"}
+                else:
+                    response = f"{get_all_categories()}"
+            elif resource == "tags":
+                if id is not None:
+                    response = {"Get tag by id needed"}
+                else:
+                    response = f"{get_all_tags()}"
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
@@ -120,8 +132,14 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "register":
             new_entry = create_user(post_body)
-        if resource == "login":
+        elif resource == "login":
             new_entry = logged_user(post_body)
+        if resource == "tags":
+            new_entry = create_tag(post_body)
+        if resource == "categories":
+            new_entry = create_new_category(post_body)
+        elif resource == "posts":
+            new_entry = create_post(post_body)
 
         self.wfile.write(f"{new_entry}".encode())
 
